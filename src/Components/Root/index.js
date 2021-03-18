@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-
 import { useQuery } from '@apollo/client'
 import faker from 'faker'
 import { nanoid } from 'nanoid'
-
 import postsQuery from 'GraphQL/Queries/posts.graphql'
-
 import { POST } from 'Router/routes'
 
-import { Column, Container, Post, PostAuthor, PostBody } from './styles'
-
+import {
+  Column,
+  Container,
+  Post,
+  PostAuthor,
+  PostBody,
+  CustomPagination,
+} from './styles'
 import ExpensiveTree from '../ExpensiveTree'
+import ReactPaginate from 'react-paginate'
 
 function Root() {
   const [count, setCount] = useState(0)
@@ -23,7 +27,12 @@ function Root() {
   ])
 
   const [value, setValue] = useState('')
-  const { data, loading } = useQuery(postsQuery)
+  const { data, loading, refetch } = useQuery(postsQuery, {
+    variables: {
+      page: 1,
+      limit: 10,
+    },
+  })
 
   function handlePush() {
     setFields([{ name: faker.name.findName(), id: nanoid() }, ...fields])
@@ -37,6 +46,13 @@ function Root() {
 
   const posts = data?.posts.data || []
 
+  const handlePageClick = ({ selected }) => {
+    refetch({
+      page: selected + 1,
+      limit: 10,
+    })
+  }
+
   return (
     <Container>
       <Column>
@@ -44,7 +60,7 @@ function Root() {
         {loading
           ? 'Loading...'
           : posts.map(post => (
-              <Post mx={4}>
+              <Post key={post.id} mx={4}>
                 <NavLink href={POST(post.id)} to={POST(post.id)}>
                   {post.title}
                 </NavLink>
@@ -52,7 +68,24 @@ function Root() {
                 <PostBody>{post.body}</PostBody>
               </Post>
             ))}
-        <div>Pagination here</div>
+        <CustomPagination>
+          <ReactPaginate
+            activeClassName="pagination__link--active"
+            breakClassName="break-me"
+            breakLabel="..."
+            containerClassName="pagination"
+            disabledClassName="pagination__link--disabled"
+            marginPagesDisplayed={2}
+            nextLabel="next"
+            pageCount={data ? data.posts.meta.totalCount / 10 : 1}
+            pageRangeDisplayed={1}
+            previousLabel="previous"
+            previousLinkClassName="pagination__link"
+            nextLinkClassName="pagination__link"
+            subContainerClassName="pages pagination"
+            onPageChange={handlePageClick}
+          />
+        </CustomPagination>
       </Column>
       <Column>
         <h4>Slow rendering</h4>

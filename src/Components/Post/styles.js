@@ -55,3 +55,16 @@ export const Back = styled.div`
     text-decoration: underline;
   }
 `
+export const NavButtons = styled.div`
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+`
+export const NavButton = styled.div`
+  background: #4caf50;
+  color: #fff;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  margin-left: 15px;
+`

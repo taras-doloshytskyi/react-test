@@ -17,6 +17,8 @@ import {
   PostBody,
   PostComment,
   PostContainer,
+  NavButtons,
+  NavButton,
 } from './styles'
 
 const SortableContainer = sortableContainer(({ children }) => (
@@ -29,6 +31,7 @@ const SortableItem = sortableElement(({ value }) => (
 
 function Post() {
   const [comments, setComments] = useState([])
+  const [activePost, setActivePost] = useState(0)
   const history = useHistory()
   const {
     params: { postId },
@@ -40,9 +43,21 @@ function Post() {
     setComments(arrayMove(comments, newIndex, oldIndex))
   }
 
-  const { data, loading } = useQuery(postQuery, { variables: { id: postId } })
-
+  const { data, loading, refetch } = useQuery(postQuery, {
+    variables: { id: postId },
+  })
   const post = data?.post || {}
+
+  const changePost = newPostid => {
+    refetch({
+      id: newPostid,
+    })
+    setActivePost(newPostid)
+  }
+
+  useEffect(() => {
+    setActivePost(Number(post?.id))
+  }, [post?.id])
 
   useEffect(() => {
     setComments(post.comments?.data || [])
@@ -64,7 +79,14 @@ function Post() {
               <PostAuthor>by {post.user.name}</PostAuthor>
               <PostBody mt={2}>{post.body}</PostBody>
             </PostContainer>
-            <div>Next/prev here</div>
+            <NavButtons>
+              <NavButton onClick={() => changePost(activePost - 1)}>
+                Prev
+              </NavButton>
+              <NavButton onClick={() => changePost(activePost + 1)}>
+                Next
+              </NavButton>
+            </NavButtons>
           </Column>
 
           <Column>

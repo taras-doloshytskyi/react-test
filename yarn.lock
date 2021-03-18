@@ -12984,7 +12984,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.7.2, prop-types@npm:^15.5.7, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:15.7.2, prop-types@npm:^15.5.7, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -13282,6 +13282,17 @@ fsevents@^1.2.7:
   version: 17.0.1
   resolution: "react-is@npm:17.0.1"
   checksum: 5a83dfc78e7adcb93d632bf367b0733db650e3abd2e9c57c33b87e50d201212c1884b0d7bcf13e692f1556189fa1b87f9f3e0ba10fe858fd6aebe83ed4fcd1ea
+  languageName: node
+  linkType: hard
+
+"react-paginate@npm:7.1.0":
+  version: 7.1.0
+  resolution: "react-paginate@npm:7.1.0"
+  dependencies:
+    prop-types: ^15.6.1
+  peerDependencies:
+    react: ^16.0.0 || ^17.0.0
+  checksum: 8eecfca811f1b660429475e6caae35c1192b676a78ec00ed526aefde7e5817004ed8ed38374f9b279635f5f748002dde7bc3e847794d9a6cf3343d22233c690d
   languageName: node
   linkType: hard
 
@@ -14883,6 +14894,7 @@ resolve@1.18.1:
     prop-types: 15.7.2
     react: 17.0.1
     react-dom: 17.0.1
+    react-paginate: 7.1.0
     react-router: 5.2.0
     react-router-config: 5.1.1
     react-router-dom: 5.2.0

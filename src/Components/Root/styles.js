@@ -40,3 +40,32 @@ export const PostBody = styled.div`
   overflow: hidden;
   white-space: normal;
 `
+
+export const CustomPagination = styled.div`
+  .pagination__link {
+  }
+  .active {
+    background-color: #4caf50;
+  }
+  .pagination__link--active {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  ul {
+    display: flex;
+    padding: 0;
+    margin: 10px 0;
+    width: 300px;
+  }
+  a {
+    padding: 6px;
+    outline: none;
+  }
+  li {
+    list-style-type: none;
+    padding: 10px;
+  }
+  li:first-child {
+    padding-left: 0;
+  }
+`
